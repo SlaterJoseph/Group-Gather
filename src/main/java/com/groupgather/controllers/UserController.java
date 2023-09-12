@@ -2,9 +2,13 @@ package com.groupgather.controllers;
 
 import com.groupgather.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("user")
@@ -17,7 +21,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    // Method to login a user
+    // Method to log in a user
     @PostMapping("login")
     public ____ login(){
 
@@ -25,8 +29,10 @@ public class UserController {
 
     // Method to create an account
     @PostMapping("create-account")
-    public ___ createAccount(){
-
+    public ResponseEntity<String> createAccount(@RequestBody Map<String, String> body){
+        String email = body.get("email");
+        String password = body.get("password");
+        return userService.createAccount(email, password);
     }
 
     // Method to change user options
