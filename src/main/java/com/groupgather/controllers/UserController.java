@@ -23,21 +23,19 @@ public class UserController {
 
     // Method to log in a user
     @PostMapping("login")
-    public ____ login(){
+    public void login(){
 
     }
 
     // Method to create an account
     @PostMapping("create-account")
     public ResponseEntity<String> createAccount(@RequestBody Map<String, String> body){
-        String email = body.get("email");
-        String password = body.get("password");
-        return userService.createAccount(email, password);
+        return userService.createAccount(body);
     }
 
     // Method to change user options
     @PostMapping("change-options")
-    public ___ changeSettings(){
+    public void changeSettings(){
 
     }
 }
