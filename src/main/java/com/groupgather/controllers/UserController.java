@@ -23,14 +23,14 @@ public class UserController {
 
     // Method to log in a user
     @PostMapping("login")
-    public void login(){
-
+    public ResponseEntity<String> login(@RequestBody Map<String, String> loginPayload){
+        return userService.loginAccount(loginPayload);
     }
 
     // Method to create an account
     @PostMapping("create-account")
-    public ResponseEntity<String> createAccount(@RequestBody Map<String, String> body){
-        return userService.createAccount(body);
+    public ResponseEntity<String> createAccount(@RequestBody Map<String, String> createPayload){
+        return userService.createAccount(createPayload);
     }
 
     // Method to change user options

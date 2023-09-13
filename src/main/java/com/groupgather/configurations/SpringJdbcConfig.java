@@ -21,9 +21,10 @@ public class SpringJdbcConfig {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("group-gather-rds.c3os1uyzhbdd.us-east-1.rds.amazonaws.com");
-        dataSource.setUsername("-------");
-        dataSource.setPassword("-----");
+        dataSource.setUrl("jdbc:postgresql://group-gather-rds.c3os1uyzhbdd.us-east-1.rds.amazonaws.com:5432/group-gather-rds");
+        dataSource.setUsername("software_dev");
+        dataSource.setPassword("Volbeat65");
+
 
         LOGGER.info("Database connection successful");
         return dataSource;
@@ -35,5 +36,6 @@ public class SpringJdbcConfig {
  *
  * JDBC FORMAT
  *
- * jdbcTemplate.query(SQL_STATEMENT, new Object[]{variable type}, FORGOT WHAT GOES NEXT
+ * jdbcTemplate.query(GET_USER, mapper, parameters, ... , end of parameters); (LIST)
+ *
  */
