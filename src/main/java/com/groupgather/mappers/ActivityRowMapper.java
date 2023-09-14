@@ -17,12 +17,13 @@ public class ActivityRowMapper implements RowMapper<Activity> {
         activity.setHighestAge(rs.getInt("highest_age"));
         activity.setHostId(rs.getInt("host_id"));
         activity.setNumOfPeople(rs.getInt("num_of_people"));
+        activity.setListOfPeople(rs.getString("list_of_people"));
         activity.setDrinking(rs.getBoolean("drinking"));
         activity.setSmoking(rs.getBoolean("smoking"));
         activity.setDescription(rs.getString("description"));
-        activity.setCost(rs.getInt("cost"));
         activity.setLocation(rs.getString("location"));
-
+        activity.setDateCreated(rs.getDate("date_created").toLocalDate());
+        activity.setDateOfEvent(rs.getDate("date_of_event").toLocalDate());
         return activity;
     }
 }

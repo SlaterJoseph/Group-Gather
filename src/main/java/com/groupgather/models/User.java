@@ -8,6 +8,7 @@ public class User {
     String firstName;
     String lastName;
     String nickName;
+    String username;
     String email;
     String password;
     String description;
@@ -26,6 +27,7 @@ public class User {
         sb.append(", firstName=");              sb.append(firstName);
         sb.append(", lastName");                sb.append(lastName);
         sb.append(", nickName");                sb.append(nickName);
+        sb.append(", userName");                sb.append(username);
         sb.append(", email");                   sb.append(email);
         sb.append(", password");                sb.append(password);
         sb.append(", description");             sb.append(description);

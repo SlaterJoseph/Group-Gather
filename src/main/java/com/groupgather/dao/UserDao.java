@@ -2,6 +2,7 @@ package com.groupgather.dao;
 
 import com.groupgather.mappers.UserRowMapper;
 import com.groupgather.models.User;
+import com.groupgather.utils.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,13 @@ import java.util.List;
 public class UserDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserDao.class);
     private final JdbcTemplate jdbcTemplate;
+    private final JsonUtils jsonUtils;
     private final UserRowMapper userRowMapper = new UserRowMapper();
 
     @Autowired
-    public UserDao(DataSource dataSource){
+    public UserDao(DataSource dataSource, JsonUtils jsonUtils){
         this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.jsonUtils = jsonUtils;
     }
 
     // Start of SQL statements
@@ -55,16 +58,8 @@ public class UserDao {
         LOGGER.debug("Updating settings for user {}", email);
         StringBuilder sb = new StringBuilder("UPDATE users SET");
 
-        for(int i = 0; i < columns.size(); i++){
-            sb.append(columns.get(i));
-            sb.append(" = ");
-            sb.append(values.get(i));
-            sb.append(",");
-        }
-
-        sb.delete(sb.toString().length() - 1, sb.toString().length()); // Removes the extra comma
+        sb.append(jsonUtils.dynamicSQL(columns, values));
         sb.append("WHERE id = ?");
-
         jdbcTemplate.update(sb.toString(),
                             new Object[]{email},
                             new int[]{Types.VARCHAR});
