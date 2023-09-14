@@ -21,7 +21,7 @@ public class SpringJdbcConfig {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://group-gather-rds.c3os1uyzhbdd.us-east-1.rds.amazonaws.com:5432/group-gather-rds");
+        dataSource.setUrl("jdbc:postgresql://group-gather-db.c3os1uyzhbdd.us-east-1.rds.amazonaws.com/group_gather_db");
         dataSource.setUsername("software_dev");
         dataSource.setPassword("Volbeat65");
 

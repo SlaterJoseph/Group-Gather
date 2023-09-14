@@ -34,8 +34,8 @@ public class UserController {
     }
 
     // Method to change user options
-    @PostMapping("change-options")
-    public void changeSettings(){
-
+    @PostMapping("update-account")
+    public ResponseEntity<String> changeSettings(@RequestBody Map<String, String> updatePayload){
+        return userService.updateAccount(updatePayload);
     }
 }

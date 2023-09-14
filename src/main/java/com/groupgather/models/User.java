@@ -37,7 +37,6 @@ public class User {
         sb.append(", activitiesParticipated");  sb.append(activitiesParticipated);
         sb.append(", activitiesHosted");        sb.append(activitiesHosted);
         sb.append("]");
-
         return sb.toString();
     }
 }

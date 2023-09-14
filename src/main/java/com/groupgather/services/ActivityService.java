@@ -1,7 +1,7 @@
 package com.groupgather.services;
 
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
-@RestController
+@Service
 public class ActivityService {
 }
