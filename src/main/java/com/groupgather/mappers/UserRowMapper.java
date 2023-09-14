@@ -12,19 +12,19 @@ public class UserRowMapper implements RowMapper<User> {
         User user = new User();
 
         user.setId(rs.getInt("id"));
-        user.setFirstName(rs.getString("firstname"));
-        user.setLastName(rs.getString("lastname"));
-        user.setNickName(rs.getString("nickname"));
+        user.setFirstName(rs.getString("first_name"));
+        user.setLastName(rs.getString("last_name"));
+        user.setNickName(rs.getString("nick_name"));
         user.setEmail(rs.getString("email"));
         user.setPassword(rs.getString("password"));
         user.setDescription(rs.getString("description"));
-        user.setDrinks(rs.getBoolean("drinks"));
-        user.setSmokes(rs.getBoolean("smokes"));
+        user.setDrinks(rs.getBoolean("does_drink"));
+        user.setSmokes(rs.getBoolean("does_smoke"));
         user.setAge(rs.getInt("age"));
-        user.setParticipantRating(rs.getLong("participantrating"));
-        user.setPlannerRating(rs.getLong("plannerrating"));
-        user.setActivitiesParticipated(rs.getInt("activitiesparticipatedin"));
-        user.setActivitiesHosted(rs.getInt("activitieshosted"));
+        user.setParticipantRating(rs.getLong("participant_rating"));
+        user.setPlannerRating(rs.getLong("planner_rating"));
+        user.setActivitiesParticipated(rs.getInt("activities_participated_in"));
+        user.setActivitiesHosted(rs.getInt("activities_hosted"));
 
         return user;
     }

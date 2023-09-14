@@ -3,6 +3,8 @@ package com.groupgather.services;
 import com.groupgather.dao.UserDao;
 import com.groupgather.models.User;
 import com.groupgather.utils.SecurityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import java.util.Map;
 
 @Service
 public class UserService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
     SecurityUtils securityUtils;
     UserDao userDao;
 
@@ -42,6 +45,7 @@ public class UserService {
             response = ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
 
+        LOGGER.debug("User's inputted password matched encoded password: {}", success);
         return response;
     }
 

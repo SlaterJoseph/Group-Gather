@@ -2,6 +2,8 @@ package com.groupgather.dao;
 
 import com.groupgather.mappers.UserRowMapper;
 import com.groupgather.models.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,7 +14,7 @@ import java.util.List;
 
 @Repository
 public class UserDao {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserDao.class);
     private final JdbcTemplate jdbcTemplate;
     private final UserRowMapper userRowMapper = new UserRowMapper();
 
@@ -36,6 +38,7 @@ public class UserDao {
 
     // Creates a new user
     public void createUser(String email, String password){
+        LOGGER.debug("Adding user {} to db", email);
         jdbcTemplate.update(NEW_USER,
                             new Object[]{email, password},
                             new int[]{Types.VARCHAR, Types.VARCHAR});
@@ -43,11 +46,13 @@ public class UserDao {
 
     // Get a user using email
     public User getUser(String email){
+        LOGGER.debug("Getting user {} from db", email);
         return jdbcTemplate.queryForObject(GET_USER, userRowMapper, email);
     }
 
     // Change a users options/settings
     public void updateUser(String email, List<String> columns, List<String> values){
+        LOGGER.debug("Updating settings for user {}", email);
         StringBuilder sb = new StringBuilder("UPDATE users SET");
 
         for(int i = 0; i < columns.size(); i++){
@@ -57,7 +62,7 @@ public class UserDao {
             sb.append(",");
         }
 
-        sb.delete(sb.toString().length() - 1, sb.toString().length()); // Removes the extra ,
+        sb.delete(sb.toString().length() - 1, sb.toString().length()); // Removes the extra comma
         sb.append("WHERE id = ?");
 
         jdbcTemplate.update(sb.toString(),
