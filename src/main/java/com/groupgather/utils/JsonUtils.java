@@ -38,7 +38,7 @@ public class JsonUtils {
             sb.append(",");
         }
 
-        sb.delete(sb.toString().length() - 1, sb.toString().length()); // Removes the extra comma
+        sb.delete(sb.toString().length() - 2, sb.toString().length()); // Removes the extra comma
         return sb.toString();
     }
 
