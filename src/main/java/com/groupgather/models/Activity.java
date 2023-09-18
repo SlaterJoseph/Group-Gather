@@ -1,9 +1,7 @@
 package com.groupgather.models;
 
 import lombok.Data;
-import org.springframework.cglib.core.Local;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 @Data

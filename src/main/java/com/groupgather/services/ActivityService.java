@@ -1,6 +1,7 @@
 package com.groupgather.services;
 
 import com.groupgather.dao.ActivityDao;
+import com.groupgather.models.Activity;
 import com.groupgather.models.User;
 import com.groupgather.utils.JsonUtils;
 import org.slf4j.Logger;
@@ -56,5 +57,13 @@ public class ActivityService {
 
     public ResponseEntity<String> addUser(Map<String, String> addUserPayload){
         return null;
+    }
+
+    // Gets activities based on the user/host
+    public ResponseEntity<List<Activity>> getActivitiesFromUser(Map<String, String> activityUserPayload) {
+        LOGGER.debug("Getting activities from {}", activityUserPayload.get("email"));
+        User user = userService.getUser(activityUserPayload.get("email"));
+        List<Activity> activityList = activityDao.getActivitiesByUser(user.getId());
+        return ResponseEntity.ok(activityList);
     }
 }

@@ -69,4 +69,8 @@ public class UserService {
     public User getUser(String email){
         return userDao.getUser(email);
     }
+
+    public void deleteUser(String userEmail) {
+        userDao.deleteUser(userEmail);
+    }
 }
