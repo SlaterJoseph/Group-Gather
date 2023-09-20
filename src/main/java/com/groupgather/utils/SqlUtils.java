@@ -25,6 +25,7 @@ public class SqlUtils {
         generateActivitySQL();
     }
 
+    // Generates SQL for activities
     public String createSQLActivity(int userId, List<String> columns, List<String> values){
         StringBuilder sb = new StringBuilder("INSERT INTO activities ");
 
@@ -67,13 +68,24 @@ public class SqlUtils {
         return activitySqlMap;
     }
 
+    // Creates a hashmap of all sql for the UserDao
     private void generateUserSQL(){
-        userSqlMap.put("NEW_USER", "INSERT INTO users (email, password) VALUES (?, ?)");
-        userSqlMap.put("GET_USER", "SELECT * FROM users WHERE email = ?");
-        userSqlMap.put("DELETE_USER", "DELETE FROM users WHERE email = ?");
+        userSqlMap.put("NEW_USER", "INSERT INTO users (email, password) VALUES (?, ?)"); // Add new user
+        userSqlMap.put("GET_USER", "SELECT * FROM users WHERE email = ?"); // Get a user
+        userSqlMap.put("DELETE_USER", "DELETE FROM users WHERE email = ?"); // Delete a user
     }
 
+    // Creates a hashmap for all the sql of the ActivityDao
     private void generateActivitySQL(){
-        activitySqlMap.put("GET_ACTIVITIES_BY_USER", "SELECT * FROM activities WHERE host_id = ?");
+        activitySqlMap.put("GET_ACTIVITIES_BY_USER", "SELECT * FROM activities WHERE host_id = ?"); // Get activities by user
+        // Get total current participants of an activity
+        activitySqlMap.put("FIND_CURRENT_PARTICIPANTS", "UPDATE activities as a SET current_participants = " +
+                "(SELECT COUNT(*) FROM participants as p WHERE p.activity_id = a.id) " +
+                "WHERE a.id = ?");
+        // Check if an activity is full of participants
+        activitySqlMap.put("CHECK_IF_ACTIVITY_IS_FULL", "SELECT CASE WHEN max_participants = current_participants " +
+                "THEN TRUE ELSE FALSE END AS result " +
+                "FROM activities" +
+                "WHERE id = ?;");
     }
 }

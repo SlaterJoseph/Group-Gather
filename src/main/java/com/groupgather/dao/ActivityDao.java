@@ -38,4 +38,22 @@ public class ActivityDao {
         LOGGER.debug("Pulling activity from user {}", id);
         return jdbcTemplate.query(sqlMap.get("GET_ACTIVITIES_BY_USER"), activityRowMapper);
     }
+
+    // Checks if the total participants has been hit
+    public boolean checkActivityFull(int activityId) {
+    }
+
+    // Increments the current participants
+    public void incrementParticipants() {
+
+    }
+
+    // Adds an entry to the Activity - User table
+    public void addActivityParticipantEntry(String activityId, String userId) {
+        LOGGER.debug("Adding user {} with activity {} to the participant table", userId, activityId);
+        /*
+
+
+         */
+    }
 }

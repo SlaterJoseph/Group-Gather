@@ -56,7 +56,21 @@ public class ActivityService {
     }
 
     public ResponseEntity<String> addUser(Map<String, String> addUserPayload){
-        return null;
+        int activityId = Integer.parseInt(addUserPayload.get("activity_id"));
+        int userId = Integer.parseInt(addUserPayload.get("user_id"));
+
+        LOGGER.debug("Adding user {} to activity {}", addUserPayload.get("activity_id"), addUserPayload.get("user_id"));
+        ResponseEntity<String> response;
+
+        if(activityDao.checkActivityFull(activityId)){
+            response = ResponseEntity.badRequest().body("Activity already full");
+        } else {
+            activityDao.addActivityParticipantEntry(addUserPayload.get("activity_id"), addUserPayload.get("user_id"));
+            activityDao.incrementParticipants();
+            response = ResponseEntity.ok("Added to activity");
+        }
+
+        return response;
     }
 
     // Gets activities based on the user/host
