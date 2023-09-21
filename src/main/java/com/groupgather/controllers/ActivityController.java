@@ -31,12 +31,14 @@ public class ActivityController {
     @GetMapping("location") // Get activities within some distance
     public ResponseEntity<List<Activity>> getActivitiesLocation(@RequestBody Map<String, String> locationPayload){
         LOGGER.debug("Getting activities based on location");
+        return activityService.getActivitiesFromLocation(locationPayload);
     }
 
     // Gets activities of a certain type
     @GetMapping("type")
     public ResponseEntity<List<Activity>> getActivityType(@RequestBody Map<String, String> activityTypePayload){
         LOGGER.debug("Getting activities based on type");
+
     }
 
     // Gets activities from a specific user
@@ -44,5 +46,11 @@ public class ActivityController {
     public ResponseEntity<List<Activity>> getActivityUser(@RequestBody Map<String, String> activityUserPayload){
         LOGGER.debug("Getting activities from user {}", activityUserPayload.get("email"));
         return activityService.getActivitiesFromUser(activityUserPayload);
+    }
+
+    @PostMapping("join-event")
+    public ResponseEntity<String> joinEvent(@RequestBody Map<String, String> joinPayload){
+        LOGGER.debug("User {} is attempting to join event {}", joinPayload.get("user_id"), joinPayload.get("activity_id"));
+        return activityService.addUser(joinPayload);
     }
 }

@@ -1,5 +1,7 @@
 package com.groupgather.utils;
 
+import net.postgis.jdbc.PGgeometry;
+import net.postgis.jdbc.geometry.Point;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -16,9 +18,26 @@ public class JsonUtils {
     public List<List<String>> mapToLists(Map<String, String> payload){
         List<String> keys = new ArrayList<>(payload.keySet());
         List<String> values = new ArrayList<>();
+        double longitude = 0;
+        double latitude = 0;
 
-        for(String key : keys){
-            values.add(payload.get(key));
+        for(int i = 0; i < keys.size(); i++){
+            String key = keys.get(i);
+
+            if (key.equals("longitude")) {
+                longitude = Double.parseDouble(payload.get(key));
+                keys.remove(i--);
+            } else if (key.equals("latitude")){
+                latitude = Double.parseDouble(payload.get(key));
+                keys.remove(i--);
+            } else {
+                values.add(payload.get(key));
+            }
+        }
+
+        if(longitude != 0 && latitude != 0){
+            keys.add("location");
+            values.add(new PGgeometry(new Point(longitude, latitude)).toString());
         }
 
         List<List<String>> lists = new ArrayList<>();

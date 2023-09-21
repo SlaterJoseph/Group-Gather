@@ -77,15 +77,23 @@ public class SqlUtils {
 
     // Creates a hashmap for all the sql of the ActivityDao
     private void generateActivitySQL(){
-        activitySqlMap.put("GET_ACTIVITIES_BY_USER", "SELECT * FROM activities WHERE host_id = ?"); // Get activities by user
-        // Get total current participants of an activity
+        activitySqlMap.put("GET_ACTIVITIES_BY_USER", "SELECT * FROM activities WHERE host_id = ?");
+        activitySqlMap.put("GET_ACTIVITIES_BY_LOCATION", "SELECT * FROM activities + " +
+                "ORDER BY location <-> ?::geometry " +
+                "LIMIT ?");
+
+        activitySqlMap.put("ADD_PARTICIPANT", "INSERT INTO participants(host_id, user_id) VALUES (?, ?)");
+        activitySqlMap.put("INCREMENT_PARTICIPANTS", "UPDATE activities SET curr_people = curr_people + 1 WHERE id = ?");
+
         activitySqlMap.put("FIND_CURRENT_PARTICIPANTS", "UPDATE activities as a SET current_participants = " +
                 "(SELECT COUNT(*) FROM participants as p WHERE p.activity_id = a.id) " +
                 "WHERE a.id = ?");
-        // Check if an activity is full of participants
         activitySqlMap.put("CHECK_IF_ACTIVITY_IS_FULL", "SELECT CASE WHEN max_participants = current_participants " +
                 "THEN TRUE ELSE FALSE END AS result " +
                 "FROM activities" +
                 "WHERE id = ?;");
+
     }
+
+
 }

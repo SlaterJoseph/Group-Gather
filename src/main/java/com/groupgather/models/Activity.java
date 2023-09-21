@@ -1,6 +1,7 @@
 package com.groupgather.models;
 
 import lombok.Data;
+import net.postgis.jdbc.PGgeometry;
 
 import java.time.LocalDate;
 
@@ -12,11 +13,11 @@ public class Activity {
     int highestAge;
     int hostId;
     int numOfPeople;
-    String listOfPeople; // Organized as "email|||email|||email...|||email
+    int currPeople;
     boolean drinking;
     boolean smoking;
     String description;
-    String location;
+    PGgeometry location;
     LocalDate dateCreated;
     LocalDate dateOfEvent;
 
@@ -29,13 +30,13 @@ public class Activity {
         sb.append(", highestAge=");                     sb.append(highestAge);
         sb.append(", hostId=");                         sb.append(hostId);
         sb.append(", numOfPeople=");                    sb.append(numOfPeople);
-        sb.append(", listOfPeople=");                   sb.append(listOfPeople);
+        sb.append(", currPeople=");                     sb.append(currPeople);
         sb.append(", drinking=");                       sb.append(drinking);
         sb.append(", smoking=");                        sb.append(smoking);
         sb.append(", description=");                    sb.append(description);
         sb.append(", location");                        sb.append(location);
         sb.append(", dateCreated");                     sb.append(dateCreated);
-        sb.append(", dateOfEvent");                   sb.append(dateOfEvent);
+        sb.append(", dateOfEvent");                     sb.append(dateOfEvent);
         sb.append("]");
         return sb.toString();
     }

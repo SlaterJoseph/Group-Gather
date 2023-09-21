@@ -4,6 +4,8 @@ import com.groupgather.dao.ActivityDao;
 import com.groupgather.models.Activity;
 import com.groupgather.models.User;
 import com.groupgather.utils.JsonUtils;
+import net.postgis.jdbc.PGgeometry;
+import net.postgis.jdbc.geometry.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,8 +67,8 @@ public class ActivityService {
         if(activityDao.checkActivityFull(activityId)){
             response = ResponseEntity.badRequest().body("Activity already full");
         } else {
-            activityDao.addActivityParticipantEntry(addUserPayload.get("activity_id"), addUserPayload.get("user_id"));
-            activityDao.incrementParticipants();
+            activityDao.addActivityParticipantEntry(activityId, userId);
+            activityDao.incrementParticipants(activityId);
             response = ResponseEntity.ok("Added to activity");
         }
 
@@ -79,5 +81,16 @@ public class ActivityService {
         User user = userService.getUser(activityUserPayload.get("email"));
         List<Activity> activityList = activityDao.getActivitiesByUser(user.getId());
         return ResponseEntity.ok(activityList);
+    }
+
+    // Gets activities based on the location
+    public ResponseEntity<List<Activity>> getActivitiesFromLocation(Map<String, String> locationPayload) {
+        double longitude = Double.parseDouble(locationPayload.get("longitude"));
+        double latitude = Double.parseDouble(locationPayload.get("latitude"));
+        LOGGER.debug("Getting activities close to location long: {}, lat: {}", longitude, latitude);
+
+        PGgeometry location = new PGgeometry(new Point(longitude, latitude));
+        List<Activity> activities = activityDao.getActivitiesByLocation(location, Integer.parseInt(locationPayload.get("amount")));
+        return ResponseEntity.ok(activities);
     }
 }
