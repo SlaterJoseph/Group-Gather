@@ -4,14 +4,24 @@ import net.postgis.jdbc.PGgeometry;
 import net.postgis.jdbc.geometry.Point;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class JsonUtils {
+    Set<String> requiredQuotes;
 
     public JsonUtils(){
+        requiredQuotes = new HashSet<>();
+        fillRequiredQuotes();
+    }
+
+    // Adds the needed values to requires quotes
+    private void fillRequiredQuotes() {
+        requiredQuotes.add("first_name");
+        requiredQuotes.add("last_name");
+        requiredQuotes.add("nick_name");
+        requiredQuotes.add("username");
+        requiredQuotes.add("description");
     }
 
     // Creates a List of 2 Lists, the first settings, 2nd corresponding values
@@ -51,10 +61,18 @@ public class JsonUtils {
         StringBuilder sb = new StringBuilder();
 
         for(int i = 0; i < columns.size(); i++){
-            sb.append(columns.get(i));
+            String colVal = columns.get(i);
+            sb.append(colVal);
             sb.append(" = ");
-            sb.append(values.get(i));
-            sb.append(",");
+
+            if(requiredQuotes.contains(colVal)){
+                sb.append("'");
+                sb.append(values.get(i));
+                sb.append("'");
+            } else {
+                sb.append(values.get(i));
+            }
+            sb.append(", ");
         }
 
         sb.delete(sb.toString().length() - 2, sb.toString().length()); // Removes the extra comma

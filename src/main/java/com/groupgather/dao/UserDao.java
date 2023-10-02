@@ -51,10 +51,11 @@ public class UserDao {
     // Change a users options/settings
     public void updateUser(String email, List<String> columns, List<String> values){
         LOGGER.debug("Updating settings for user {}", email);
-        StringBuilder sb = new StringBuilder("UPDATE users SET");
+        StringBuilder sb = new StringBuilder("UPDATE users SET ");
 
         sb.append(jsonUtils.dynamicSQL(columns, values));
-        sb.append("WHERE id = ?");
+        sb.append(" WHERE email = ?");
+
         jdbcTemplate.update(sb.toString(),
                             new Object[]{email},
                             new int[]{Types.VARCHAR});

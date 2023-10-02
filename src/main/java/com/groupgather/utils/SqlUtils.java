@@ -70,7 +70,7 @@ public class SqlUtils {
 
     // Creates a hashmap of all sql for the UserDao
     private void generateUserSQL(){
-        userSqlMap.put("NEW_USER", "INSERT INTO users (email, password) VALUES (?, ?)"); // Add new user
+        userSqlMap.put("NEW_USER", "INSERT INTO users (email, password, participant_rating, planner_rating, activities_participated_in, activities_hosted) VALUES (?, ?, 0, 0, 0, 0)"); // Add new user
         userSqlMap.put("GET_USER", "SELECT * FROM users WHERE email = ?"); // Get a user
         userSqlMap.put("DELETE_USER", "DELETE FROM users WHERE email = ?"); // Delete a user
     }

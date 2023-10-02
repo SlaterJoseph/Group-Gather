@@ -70,6 +70,7 @@ public class UserService {
         return userDao.getUser(email);
     }
 
+    // Deletes a given user
     public void deleteUser(String userEmail) {
         userDao.deleteUser(userEmail);
     }
