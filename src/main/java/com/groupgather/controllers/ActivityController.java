@@ -34,12 +34,12 @@ public class ActivityController {
         return activityService.getActivitiesFromLocation(locationPayload);
     }
 
-    // Gets activities of a certain type
-    @GetMapping("type")
-    public ResponseEntity<List<Activity>> getActivityType(@RequestBody Map<String, String> activityTypePayload){
-        LOGGER.debug("Getting activities based on type");
-
-    }
+//    // Gets activities of a certain type
+//    @GetMapping("type")
+//    public ResponseEntity<List<Activity>> getActivityType(@RequestBody Map<String, String> activityTypePayload){
+//        LOGGER.debug("Getting activities based on type");
+//
+//    }
 
     // Gets activities from a specific user
     @GetMapping("user")

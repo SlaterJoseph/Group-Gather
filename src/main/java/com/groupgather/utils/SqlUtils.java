@@ -84,6 +84,7 @@ public class SqlUtils {
 
         activitySqlMap.put("ADD_PARTICIPANT", "INSERT INTO participants(host_id, user_id) VALUES (?, ?)");
         activitySqlMap.put("INCREMENT_PARTICIPANTS", "UPDATE activities SET curr_people = curr_people + 1 WHERE id = ?");
+        activitySqlMap.put("CHECK_PARTICIPANTS", "SELECT * FROM activities WHERE id = ?");
 
         activitySqlMap.put("FIND_CURRENT_PARTICIPANTS", "UPDATE activities as a SET current_participants = " +
                 "(SELECT COUNT(*) FROM participants as p WHERE p.activity_id = a.id) " +

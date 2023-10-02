@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.JDBCType;
 import java.sql.Types;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +43,21 @@ public class ActivityDao {
 
     // Checks if the total participants has been hit
     public boolean checkActivityFull(int activityId) {
+        LOGGER.debug("Checking if the activity is full");
+        Activity activity = jdbcTemplate.queryForObject(sqlMap.get("CHECK_PARTICIPANTS"),
+                new Object[]{activityId},
+                new int[]{Types.INTEGER},
+                activityRowMapper);
+
+        // Check if there is a participant limit, if so return if full, if not return false
+        boolean filled = false;
+        try {
+            assert activity != null;
+            filled = activity.getNumOfPeople() == activity.getCurrPeople();
+        } catch (AssertionError ignored){
+        }
+
+        return filled;
     }
 
     // Increments the current participants
